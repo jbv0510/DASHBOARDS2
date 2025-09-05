@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Dashboard - Complete White Theme</title>
+    <meta name="description" content="Dashboard de performance executiva otimizado para web, com foco em SEO, acessibilidade e performance.">
+    <meta property="og:title" content="Dashboard de Performance Executiva">
+    <meta property="og:description" content="Indicadores Estratégicos YTD 2024-2025.">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --excellent-green: #00C851;
+            --good-blue: #1976D2;
+            --warning-orange: #FF8F00;
+            --critical-red: #D32F2F;
+            --profit-green: #2E7D32;
+            --revenue-blue: #1565C0;
+            --saving-teal: #00695C;
+            --cost-red: #C62828;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --bg-accent: #F5F5F5;
+            --text-primary: #212121;
+            --text-secondary: #424242;
+            --text-tertiary: #757575;
+            --text-muted: #BDBDBD;
+            --border-light: #E0E0E0;
+            --border-medium: #BDBDBD;
+            --border-accent: #90CAF9;
+            --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-medium: 0 4px 16px rgba(0,0,0,0.12);
+            --shadow-strong: 0 8px 32px rgba(0,0,0,0.16);
+        }
+
+        body.dark-mode {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-card: #242424;
+            --bg-accent: #2c2c2c;
+            --text-primary: #E0E0E0;
+            --text-secondary: #BDBDBD;
+            --text-tertiary: #8A8A8A;
+            --text-muted: #616161;
+            --border-light: #3A3A3A;
+            --border-medium: #545454;
+            --border-accent: #1976D2;
+            --shadow-light: 0 2px 8px rgba(0,0,0,0.25);
+            --shadow-medium: 0 4px 16px rgba(0,0,0,0.35);
+            --shadow-strong: 0 8px 32px rgba(0,0,0,0.45);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            transition: background 0.5s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 85% 15%, rgba(25, 118, 210, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 15% 85%, rgba(0, 200, 81, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .header-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-light);
+            transition: all 0.2s ease;
+        }
+        .header-btn:hover {
+            background: var(--bg-accent);
+            transform: scale(1.05);
+        }
+
+        main {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .dashboard-container {
+            width: 100%;
+            display: none;
+            padding: 24px;
+            animation: slideIn 0.6s ease-out;
+            gap: 24px;
+        }
+        
+        .dashboard-container.active { display: grid; }
+
+        .dashboard-1 {
+            grid-template-columns: 2fr 1.2fr;
+            grid-template-rows: auto 1fr 1fr;
+        }
+
+        .dashboard-2 {
+            grid-template-columns: 1.5fr 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+        }
+
+        .dashboard-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 20px 28px;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--excellent-green), var(--good-blue), var(--warning-orange));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-time {
+            text-align: right;
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        
+        .header-time-roi {
+            font-weight: 600;
+            color: var(--saving-teal);
+        }
+
+        .header-time-roi-value {
+            color: var(--excellent-green);
+            font-weight: 700;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid;
+        }
+
+        .status-excellent {
+            background: rgba(0, 200, 81, 0.1);
+            color: var(--excellent-green);
+            border-color: var(--excellent-green);
+        }
+
+        .status-warning {
+            background: rgba(255, 143, 0, 0.1);
+            color: var(--warning-orange);
+            border-color: var(--warning-orange);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--border-accent);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-trend {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            background: rgba(0, 200, 81, 0.1);
+            color: var(--excellent-green);
+        }
+
+        .trend-down {
+            background: rgba(211, 47, 47, 0.1);
+            color: var(--critical-red);
+        }
+
+        .trend-stable {
+            background: rgba(255, 143, 0, 0.1);
+            color: var(--warning-orange);
+        }
+
+        .primary-metric {
+            font-size: 48px;
+            font-weight: 800;
+            text-align: center;
+            margin: 20px 0;
+            line-height: 1;
+        }
+
+        .metric-excellent { color: var(--excellent-green); }
+        .metric-good { color: var(--good-blue); }
+        .metric-warning { color: var(--warning-orange); }
+        .metric-critical { color: var(--critical-red); }
+        .metric-financial { color: var(--saving-teal); }
+
+        .secondary-metric {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .metric-subtitle {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .progress-container {
+            margin: 16px 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .progress-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-accent);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 2s ease;
+            width: 0%;
+        }
+
+        .progress-excellent { background: linear-gradient(90deg, var(--excellent-green), #00A63F); }
+        .progress-good { background: linear-gradient(90deg, var(--good-blue), #1565C0); }
+        .progress-warning { background: linear-gradient(90deg, var(--warning-orange), #EF6C00); }
+
+        .chart-container {
+            height: 200px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0;
+        }
+
+        .donut-chart {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .donut-sla {
+            background: conic-gradient(
+                var(--excellent-green) 0deg 249deg,
+                var(--warning-orange) 249deg 305deg,
+                var(--critical-red) 305deg 360deg
+            );
+        }
+
+        .donut-saving {
+            background: conic-gradient(
+                var(--profit-green) 0deg 178deg,
+                var(--revenue-blue) 178deg 292deg,
+                var(--warning-orange) 292deg 360deg
+            );
+        }
+
+        .donut-capacity {
+            background: conic-gradient(
+                var(--excellent-green) 0deg 255deg,
+                var(--good-blue) 255deg 360deg
+            );
+        }
+
+        .donut-chart::before {
+            content: '';
+            width: 90px;
+            height: 90px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            position: absolute;
+            border: 2px solid var(--border-light);
+        }
+
+        .donut-center {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .donut-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--excellent-green);
+        }
+
+        .donut-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .kpi-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-item:hover {
+            background: var(--bg-accent);
+            transform: translateY(-2px);
+        }
+
+        .kpi-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .status-grid {
+            display: grid;
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .status-item.excellent { border-left-color: var(--excellent-green); }
+        .status-item.warning { border-left-color: var(--warning-orange); }
+        .status-item.critical { border-left-color: var(--critical-red); }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+
+        .status-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .ranking-table {
+            margin: 16px 0;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .ranking-item:hover {
+            background: var(--bg-secondary);
+            margin: 0 -12px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .ranking-position {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+        }
+
+        .ranking-position.top1 { background: linear-gradient(135deg, #FFD700, #FFA000); color: #1A1A1A; }
+        .ranking-position.top2 { background: linear-gradient(135deg, #C0C0C0, #757575); }
+        .ranking-position.top3 { background: linear-gradient(135deg, #CD7F32, #8D6E63); }
+        .ranking-position.normal { background: var(--good-blue); }
+
+        .ranking-info {
+            flex: 1;
+        }
+
+        .ranking-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .ranking-description {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        .ranking-value {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--saving-teal);
+        }
+
+        .ranking-percentage {
+            font-size: 10px;
+            color: var(--text-tertiary);
+        }
+
+        .financial-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .financial-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border-top: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .financial-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .financial-card.revenue { border-top-color: var(--revenue-blue); }
+        .financial-card.saving { border-top-color: var(--saving-teal); }
+        .financial-card.cost { border-top-color: var(--cost-red); }
+
+        .financial-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .financial-value.revenue { color: var(--revenue-blue); }
+        .financial-value.saving { color: var(--saving-teal); }
+        .financial-value.cost { color: var(--cost-red); }
+
+        .financial-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .financial-trend {
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            height: 100px;
+            margin: 20px 0;
+            gap: 8px;
+        }
+
+        .bar {
+            border-radius: 4px 4px 0 0;
+            transition: height 2s ease;
+            border: 1px solid var(--border-light);
+            height: 0%;
+        }
+
+        .bar-excellent { background: linear-gradient(to top, var(--excellent-green), #00A63F); }
+        .bar-good { background: linear-gradient(to top, var(--good-blue), #1565C0); }
+        .bar-warning { background: linear-gradient(to top, var(--warning-orange), #EF6C00); }
+        .bar-critical { background: linear-gradient(to top, var(--critical-red), #B71C1C); }
+
+        .navigation {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-medium);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--bg-card);
+            box-shadow: var(--shadow-light);
+        }
+        .nav-dot:focus-visible {
+            outline: 3px solid var(--good-blue);
+            outline-offset: 2px;
+        }
+
+        .nav-dot.active {
+            background: var(--excellent-green);
+            transform: scale(1.3);
+        }
+
+        .nav-dot:hover:not(.active) {
+            background: var(--good-blue);
+            transform: scale(1.1);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-controls {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            gap: 12px;
+            z-index: 2000;
+        }
+
+        .section-header {
+            font-size: 13px; 
+            font-weight: 600; 
+            color: var(--text-primary); 
+            margin-bottom: 4px;
+        }
+        
+        .section-value {
+            font-size: 24px; 
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            font-size: 10px; 
+            color: var(--text-tertiary);
+        }
+
+        .summary-card {
+            padding: 16px; 
+            border-radius: 8px; 
+            border: 1px solid;
+        }
+
+        .summary-strong {
+            background: rgba(0, 200, 81, 0.05);
+            border-color: rgba(0, 200, 81, 0.1);
+        }
+
+        .summary-attention {
+            background: rgba(255, 143, 0, 0.05);
+            border-color: rgba(255, 143, 0, 0.1);
+        }
+        
+        .summary-list {
+            font-size: 11px; 
+            color: var(--text-tertiary); 
+            line-height: 1.4;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 1200px) {
+            .dashboard-1, .dashboard-2, .dashboard-3 {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            .header-right {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 10px;
+            }
+            .header-title {
+                font-size: 22px;
+            }
+            .header-subtitle {
+                font-size: 12px;
+            }
+            .top-controls {
+                top: auto;
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="dashboard-container dashboard-1 active" id="dashboard1">
+            <header class="header">
+                <div>
+                    <h1 class="header-title">📊 PERFORMANCE EXECUTIVA</h1>
+                    <p class="header-subtitle">Indicadores Estratégicos • YTD 2024-2025</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-time">
+                        <div style="font-weight: 600;">Segunda, 18 Ago 2025</div>
+                        <div id="current-time">14:30:45</div>
+                    </div>
+                    <button class="header-btn" aria-label="Alternar para modo escuro/claro" id="themeToggleBtn">
+                        Dark Mode
+                    </button>
+                    <button class="header-btn" aria-label="Alternar para modo tela cheia" id="fullscreenToggleBtn">
+                        Fullscreen
+                    </button>
+                    <div class="status-badge status-excellent">Performance Excelente</div>
+                </div>
+            </header>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 Requisições Processadas</h2>
+                    <div class="card-trend trend-up">↗ +12.4%</div>
+                </div>
+                
+                <div class="primary-metric metric-excellent">8.726</div>
+                <div class="metric-label">Total de Requisições Atendidas YTD</div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Meta Anual (10.000)</span>
+                        <span class="progress-value">87.3%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-excellent" data-target="87"></div>
+                    </div>
+                </div>
+                
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-excellent">566</div>
+                        <div class="kpi-label">Média Mensal</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-excellent">95.9%</div>
+                        <div class="kpi-label">Taxa Sucesso</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">1.274 requisições restantes • Projeção: Meta atingida em Nov/2025</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⚡ SLA & Eficiência</h2>
+                    <div class="card-trend trend-warning">⚠ Atenção SLA</div>
+                </div>
+                <div class="chart-container">
+                    <div class="donut-chart donut-sla">
+                        <div class="donut-center">
+                            <div class="donut-value">69.23%</div>
+                            <div class="donut-label">SLA OK</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-item excellent">
+                        <div class="status-indicator" style="background: var(--excellent-green);"></div>
+                        <div class="status-text">Dentro do SLA</div>
+                        <div class="status-value">2.191 req</div>
+                    </div>
+                    <div class="status-item warning">
+                        <div class="status-indicator" style="background: var(--warning-orange);"></div>
+                        <div class="status-text">Próximo ao limite</div>
+                        <div class="status-value">497 req</div>
+                    </div>
+                    <div class="status-item critical">
+                        <div class="status-indicator" style="background: var(--critical-red);"></div>
+                        <div class="status-text">Fora do SLA</div>
+                        <div class="status-value">975 req</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Tempo médio atual: 26.6 dias • Meta: ≤ 30 dias</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💰 Economia Acumulado</h2>
+                    <div class="card-trend trend-up">↗ +15.2%</div>
+                </div>
+                <div class="secondary-metric metric-financial">R$ 45.459 Mil</div>
+                <div class="metric-label">Total de Economia Gerada YTD</div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">CAPEX/Serv. Técnicos</span>
+                        <span class="progress-value">49.47%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-excellent" data-target="49"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Diretos</span>
+                        <span class="progress-value">31.65%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" data-target="32"></div>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Indiretos</span>
+                        <span class="progress-value">17.49%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-warning" data-target="17"></div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Meta anual: R$ 52M • Restam: R$ 6.541K (87.4% atingido)</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📈 Análise Temporal</h2>
+                    <div class="card-trend trend-stable">→ Sazonal</div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-warning">26.6</div>
+                        <div class="kpi-label">Dias Médio SLA</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-excellent">777</div>
+                        <div class="kpi-label">Pico (Jul/24)</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-critical">241</div>
+                        <div class="kpi-label">Vale (Ago/24)</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-warning">3.2x</div>
+                        <div class="kpi-label">Variação Sazonal</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar bar-good" style="width: 20px;" data-target="40"></div>
+                        <div class="bar bar-good" style="width: 20px;" data-target="35"></div>
+                        <div class="bar bar-good" style="width: 20px;" data-target="45"></div>
+                        <div class="bar bar-good" style="width: 20px;" data-target="55"></div>
+                        <div class="bar bar-excellent" style="width: 20px;" data-target="70"></div>
+                        <div class="bar bar-excellent" style="width: 20px;" data-target="85"></div>
+                        <div class="bar bar-excellent" style="width: 20px;" data-target="100"></div>
+                        <div class="bar bar-critical" style="width: 20px;" data-target="25"></div>
+                    </div>
+                    <div class="metric-subtitle">
+                        Jan-Ago 2024 | Projeção Set: 450-550 req
+                    </div>
+                </div>
+                <p class="metric-subtitle">Tendência: Recuperação pós-sazonalidade • Set/25 projetado: ~500 req</p>
+            </article>
+        </section>
+
+        <section class="dashboard-container dashboard-2" id="dashboard2">
+            <header class="header">
+                <div>
+                    <h1 class="header-title">💰 ANÁLISE FINANCEIRA & ECONOMIA</h1>
+                    <p class="header-subtitle">ROI • Modalidades • Performance por Categoria</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-time">
+                        <div class="header-time-roi">ROI</div>
+                        <div class="header-time-roi-value">+284%</div>
+                    </div>
+                    <button class="header-btn" aria-label="Alternar para modo escuro/claro" id="themeToggleBtn2">
+                        Dark Mode
+                    </button>
+                    <button class="header-btn" aria-label="Alternar para modo tela cheia" id="fullscreenToggleBtn2">
+                        Fullscreen
+                    </button>
+                    <div class="status-badge status-excellent">Meta Superada</div>
+                </div>
+            </header>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 Economia por Categoria</h2>
+                    <div class="card-trend trend-up">↗ +18.3%</div>
+                </div>
+                <div class="financial-grid">
+                    <div class="financial-card revenue">
+                        <div class="financial-value revenue">R$ 24.215</div>
+                        <div class="financial-label">DIRETOS</div>
+                        <div class="financial-trend" style="color: var(--excellent-green);">↗ +15.2% vs LY</div>
+                    </div>
+                    <div class="financial-card saving">
+                        <div class="financial-value saving">R$ 12.054</div>
+                        <div class="financial-label">CAPEX/SERV.</div>
+                        <div class="financial-trend" style="color: var(--excellent-green);">↗ +8.7% vs LY</div>
+                    </div>
+                    <div class="financial-card cost">
+                        <div class="financial-value cost">R$ 9.190</div>
+                        <div class="financial-label">INDIRETOS</div>
+                        <div class="financial-trend" style="color: var(--excellent-green);">↗ +12.1% vs LY</div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="donut-chart donut-saving">
+                        <div class="donut-center">
+                            <div class="donut-value">R$ 45.459</div>
+                            <div class="donut-label">Total Mil</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Distribuição: 53.3% Diretos • 26.5% CAPEX • 20.2% Indiretos</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🔄 Modalidades de Compra</h2>
+                    <div class="card-trend trend-up">↗ +5.3%</div>
+                </div>
+                <div class="chart-container">
+                    <div class="donut-chart donut-capacity">
+                        <div class="donut-center">
+                            <div class="donut-value">70.89%</div>
+                            <div class="donut-label">Recorrente</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-item excellent">
+                        <div class="status-indicator" style="background: var(--revenue-blue);"></div>
+                        <div class="status-text">Recorrente</div>
+                        <div class="status-value">R$ 32.226M (70.89%)</div>
+                    </div>
+                    <div class="status-item" style="border-left-color: var(--good-blue);">
+                        <div class="status-indicator" style="background: var(--good-blue);"></div>
+                        <div class="status-text">Pontual (Spot)</div>
+                        <div class="status-value">R$ 13.231M (29.11%)</div>
+                    </div>
+                    <div class="status-item warning">
+                        <div class="status-indicator" style="background: var(--warning-orange);"></div>
+                        <div class="status-text">Renovação Contrato</div>
+                        <div class="status-value">R$ 1.067K (0.01%)</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Total: R$ 45.458.794 • Otimização: +23% eficiência contratos</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🏆 Top Performance</h2>
+                    <div class="card-trend trend-up">↗ Hall da Fama</div>
+                </div>
+                <div class="ranking-table">
+                    <div class="ranking-item">
+                        <div class="ranking-position top1">1</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">LUCAS MAIA</div>
+                            <div class="ranking-description">Aquisição de Storage</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="ranking-value">R$ 3.242.900</div>
+                            <div class="ranking-percentage">39.39%</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position top2">2</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">TATIANE CUNHA</div>
+                            <div class="ranking-description">Centrífuga de Fluxo</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="ranking-value">R$ 2.873.779</div>
+                            <div class="ranking-percentage">34.85%</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position top3">3</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">TAISE PEREIRA</div>
+                            <div class="ranking-description">Placa de Petri</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="ranking-value">R$ 2.372.505</div>
+                            <div class="ranking-percentage">60.22%</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position normal">4</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">ANDREIA LUIZA</div>
+                            <div class="ranking-description">Transporte Rodoviário</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="ranking-value">R$ 1.846.823</div>
+                            <div class="ranking-percentage">17.46%</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-position normal">5</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">TAMIRES MONTEIRO</div>
+                            <div class="ranking-description">Bolsa de Pool</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="ranking-value">R$ 1.669.140</div>
+                            <div class="ranking-percentage">30.85%</div>
+                        </div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Top 5 = 68.7% do economia total • Média economia: 36.5%</p>
+            </article>
+        </section>
+
+        <section class="dashboard-container dashboard-3" id="dashboard3">
+            <header class="header">
+                <div>
+                    <h1 class="header-title">⚙️ GESTÃO OPERACIONAL & CAPACIDADE</h1>
+                    <p class="header-subtitle">Performance • Valores • Previsões</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-time">
+                        <div class="header-time-capacity">Capacidade</div>
+                        <div class="header-time-capacity-value">95.9%</div>
+                    </div>
+                    <button class="header-btn" aria-label="Alternar para modo escuro/claro" id="themeToggleBtn3">
+                        Dark Mode
+                    </button>
+                    <button class="header-btn" aria-label="Alternar para modo tela cheia" id="fullscreenToggleBtn3">
+                        Fullscreen
+                    </button>
+                    <div class="status-badge status-excellent">Sistema Otimizado</div>
+                </div>
+            </header>
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📊 Performance Operacional</h2>
+                    <div class="card-trend trend-up">↗ +7.2%</div>
+                </div>
+                <div class="primary-metric metric-excellent">3.166</div>
+                <div class="metric-label">Requisições Processadas (vs 3.300 recebidas)</div>
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span class="progress-label">Taxa de Processamento</span>
+                        <span class="progress-value">95.9%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-excellent" data-target="96"></div>
+                    </div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-good">14.454</div>
+                        <div class="kpi-label">Linhas Recebidas</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-excellent">13.597</div>
+                        <div class="kpi-label">Linhas Processadas</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Pendencia atual: 134 requisições • Tempo resolução médio: 3.2 dias</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">💳 Valor Médios por Categoria</h2>
+                    <div class="card-trend trend-stable">→ Análise</div>
+                </div>
+                <div class="financial-grid">
+                    <div class="financial-card revenue">
+                        <div class="financial-value revenue">R$ 182.783</div>
+                        <div class="financial-label">CAPEX/TÉCNICOS</div>
+                        <div class="financial-trend" style="color: var(--text-tertiary);">5.303 linhas</div>
+                    </div>
+                    <div class="financial-card saving">
+                        <div class="financial-value saving">R$ 49.651</div>
+                        <div class="financial-label">DIRETOS</div>
+                        <div class="financial-trend" style="color: var(--text-tertiary);">11.992 linhas</div>
+                    </div>
+                    <div class="financial-card cost">
+                        <div class="financial-value cost">R$ 30.017</div>
+                        <div class="financial-label">INDIRETOS</div>
+                        <div class="financial-trend" style="color: var(--text-tertiary);">17.440 linhas</div>
+                    </div>
+                    <div class="financial-card" style="border-top-color: var(--critical-red);">
+                        <div class="financial-value" style="color: var(--critical-red);">R$ 5.959.519</div>
+                        <div class="financial-label">ENGENHARIA</div>
+                        <div class="financial-trend" style="color: var(--text-tertiary);">4 linhas</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Engenharia: Alto valor unitário • CAPEX: Maior volume de linhas</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📈 Análise Semanal</h2>
+                    <div class="card-trend trend-stable">→ Padrão</div>
+                </div>
+                <div class="chart-container">
+                    <div style="text-align: center;">
+                        <div class="metric-subtitle">📊 Requisições por Semana (2024)</div>
+                        <div class="bar-chart" style="height: 80px; gap: 4px;">
+                            <div class="bar bar-good" style="width: 12px;" data-target="45"></div>
+                            <div class="bar bar-good" style="width: 12px;" data-target="50"></div>
+                            <div class="bar bar-good" style="width: 12px;" data-target="60"></div>
+                            <div class="bar bar-excellent" style="width: 12px;" data-target="70"></div>
+                            <div class="bar bar-excellent" style="width: 12px;" data-target="75"></div>
+                            <div class="bar bar-excellent" style="width: 12px;" data-target="85"></div>
+                            <div class="bar bar-excellent" style="width: 12px;" data-target="90"></div>
+                            <div class="bar bar-excellent" style="width: 12px;" data-target="100"></div>
+                            <div class="bar bar-good" style="width: 12px;" data-target="65"></div>
+                            <div class="bar bar-good" style="width: 12px;" data-target="55"></div>
+                            <div class="bar bar-warning" style="width: 12px;" data-target="40"></div>
+                            <div class="bar bar-critical" style="width: 12px;" data-target="25"></div>
+                        </div>
+                        <div class="metric-subtitle">
+                            Semanas 1-35 • Pico: S24 (154 req) • Vale: S32 (101 req)
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-excellent">154</div>
+                        <div class="kpi-label">Pico Semanal</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-critical">101</div>
+                        <div class="kpi-label">Vale Semanal</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🔮 Previsões Inteligentes</h2>
+                    <div class="card-trend trend-up">↗ IA/ML</div>
+                </div>
+                <div style="margin: 16px 0;">
+                    <div class="summary-card" style="border-left: 4px solid var(--good-blue);">
+                        <div class="section-header">Projeção Setembro 2025</div>
+                        <div class="section-value" style="color: var(--good-blue);">520-580 req</div>
+                        <div class="section-subtitle">Confiança: 87% • Baseado em regressão + sazonalidade</div>
+                    </div>
+                    
+                    <div class="summary-card" style="border-left: 4px solid var(--excellent-green);">
+                        <div class="section-header">Meta Q4 2025</div>
+                        <div class="section-value" style="color: var(--excellent-green);">2.100 requisições</div>
+                        <div class="section-subtitle">Probabilidade atingimento: 89% • Tendência positiva</div>
+                    </div>
+
+                    <div class="summary-card" style="border-left: 4px solid var(--warning-orange);">
+                        <div class="section-header">Alerta Capacidade Q1/2026</div>
+                        <div class="section-value" style="color: var(--warning-orange); font-size: 20px;">+15% demanda</div>
+                        <div class="section-subtitle">Recomendação: Reforço de 2-3 analistas</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Modelo preditivo: ARIMA + Random Forest • Acurácia histórica: 94.2%</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⏱️ SLA Detalhado</h2>
+                    <div class="card-trend trend-warning">⚠ Monitorar</div>
+                </div>
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-warning">26.6</div>
+                        <div class="kpi-label">Dias Médio</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value metric-warning">69.23%</div>
+                        <div class="kpi-label">Dentro SLA</div>
+                    </div>
+                </div>
+                <div class="status-grid">
+                    <div class="status-item excellent">
+                        <div class="status-indicator" style="background: var(--excellent-green);"></div>
+                        <div class="status-text">≤ 30 dias</div>
+                        <div class="status-value">2.191 req (69.23%)</div>
+                    </div>
+                    <div class="status-item warning">
+                        <div class="status-indicator" style="background: var(--warning-orange);"></div>
+                        <div class="status-text">31-45 dias</div>
+                        <div class="status-value">497 req (15.71%)</div>
+                    </div>
+                    <div class="status-item critical">
+                        <div class="status-indicator" style="background: var(--critical-red);"></div>
+                        <div class="status-text">> 45 dias</div>
+                        <div class="status-value">475 req (15.01%)</div>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Target: 85% dentro SLA • Gap atual: -15.77% • Ação: Processo otimização</p>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎯 Resumo Executivo</h2>
+                    <div class="card-trend trend-up">↗ Consolidado</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0;">
+                    <div class="summary-card summary-strong">
+                        <div class="summary-list-header">PONTOS FORTES</div>
+                        <ul class="summary-list">
+                            <li>Requisições 87% da meta</li>
+                            <li>Economia R$ 45M superado</li>
+                            <li>Capacidade 95.9% otimizada</li>
+                            <li>ROI +284% excepcional</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card summary-attention">
+                        <div class="summary-list-header">ATENÇÃO NECESSÁRIA</div>
+                        <ul class="summary-list">
+                            <li>SLA 69% abaixo meta 85%</li>
+                            <li>975 req fora do prazo</li>
+                            <li>Sazonalidade Aug -69%</li>
+                            <li>Q1/26 precisa reforço</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="metric-subtitle">Status geral: EXCELENTE com pontos de melhoria identificados</p>
+            </article>
+        </section>
+    </main>
+
+    <nav class="navigation">
+        <button class="nav-dot active" role="tab" aria-selected="true" aria-controls="dashboard1" tabindex="0" title="Performance Executiva"></button>
+        <button class="nav-dot" role="tab" aria-selected="false" aria-controls="dashboard2" tabindex="-1" title="Análise Financeira"></button>
+        <button class="nav-dot" role="tab" aria-selected="false" aria-controls="dashboard3" tabindex="-1" title="Gestão Operacional"></button>
+    </nav>
+
+    <script>
+        let currentDashboard = 1;
+        let autoRotateInterval;
+        let isPaused = false;
+        
+        function updateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateString = now.toLocaleDateString('pt-BR', options);
+            const timeString = now.toLocaleTimeString('pt-BR', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            const timeElement = document.getElementById('current-time');
+            const dateElement = document.querySelector('.header-time div:first-child');
+            
+            if (dateElement) {
+                dateElement.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+            }
+            if (timeElement) {
+                timeElement.textContent = timeString;
+            }
+        }
+        
+        function animateElements() {
+            // Animate progress bars
+            document.querySelectorAll('.progress-fill').forEach(bar => {
+                const target = bar.getAttribute('data-target');
+                if (target) {
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = target + '%';
+                    }, 500);
+                }
+            });
+            
+            // Animate bar charts
+            document.querySelectorAll('.bar').forEach(bar => {
+                const target = bar.getAttribute('data-target');
+                if (target) {
+                    bar.style.height = '0%';
+                    setTimeout(() => {
+                        bar.style.height = target + '%';
+                    }, 700);
+                }
+            });
+        }
+        
+        function showDashboard(num) {
+            if (isPaused) return;
+            
+            // Hide all dashboards
+            document.querySelectorAll('.dashboard-container').forEach(d => {
+                d.classList.remove('active');
+            });
+            
+            // Remove active class from nav dots
+            document.querySelectorAll('.nav-dot').forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show selected dashboard
+            document.getElementById(`dashboard${num}`).classList.add('active');
+            document.querySelectorAll('.nav-dot')[num - 1].classList.add('active');
+            
+            currentDashboard = num;
+            
+            // Restart animations
+            setTimeout(() => {
+                animateElements();
+            }, 300);
+        }
+        
+        function autoRotate() {
+            if (!isPaused) {
+                currentDashboard = currentDashboard === 3 ? 1 : currentDashboard + 1;
+                showDashboard(currentDashboard);
+            }
+        }
+        
+        function startAutoRotate() {
+            if (!autoRotateInterval) {
+                autoRotateInterval = setInterval(autoRotate, 15000); // 15 seconds
+            }
+        }
+        
+        function stopAutoRotate() {
+            if (autoRotateInterval) {
+                clearInterval(autoRotateInterval);
+                autoRotateInterval = null;
+            }
+        }
+        
+        function togglePause() {
+            isPaused = !isPaused;
+            if (isPaused) {
+                stopAutoRotate();
+            } else {
+                startAutoRotate();
+            }
+        }
+        
+        // Event Listeners
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    stopAutoRotate();
+                    showDashboard(currentDashboard === 1 ? 3 : currentDashboard - 1);
+                    setTimeout(() => { if (!isPaused) startAutoRotate(); }, 3000);
+                    break;
+                case 'ArrowRight':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    stopAutoRotate();
+                    showDashboard(currentDashboard === 3 ? 1 : currentDashboard + 1);
+                    setTimeout(() => { if (!isPaused) startAutoRotate(); }, 3000);
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    togglePause();
+                    break;
+                case '1':
+                    e.preventDefault();
+                    showDashboard(1);
+                    break;
+                case '2':
+                    e.preventDefault();
+                    showDashboard(2);
+                    break;
+                case '3':
+                    e.preventDefault();
+                    showDashboard(3);
+                    break;
+            }
+        });
+        
+        document.querySelector('.navigation').addEventListener('mouseenter', stopAutoRotate);
+        document.querySelector('.navigation').addEventListener('mouseleave', () => {
+            if (!isPaused) startAutoRotate();
+        });
+        
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                stopAutoRotate();
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                setTimeout(() => { if (!isPaused) startAutoRotate(); }, 2000);
+            });
+        });
+        
+        document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+            dot.addEventListener('click', function() {
+                stopAutoRotate();
+                showDashboard(index + 1);
+                setTimeout(() => { if (!isPaused) startAutoRotate(); }, 5000);
+            });
+        });
+
+        const themeToggleButtons = document.querySelectorAll('[id^="themeToggleBtn"]');
+        themeToggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+            });
+        });
+
+        const fullscreenToggleButtons = document.querySelectorAll('[id^="fullscreenToggleBtn"]');
+        fullscreenToggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 1000);
+            startAutoRotate();
+            showDashboard(1); 
+            animateElements();
+        });
+    </script>
+</body>
+</html>
